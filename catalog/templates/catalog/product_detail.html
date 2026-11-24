@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }}</title>
+</head>
+<body>
+    <article class="product-detail">
+        <h1>{{ product.name }}</h1>
+
+        <p><strong>Категория:</strong> {{ product.category.name }}</p>
+        <p><strong>Цена:</strong> {{ product.price }} руб.</p>
+
+        {% if product.image %}
+            <div class="product-image">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width: 400px;">
+            </div>
+        {% else %}
+            <p><em>Изображение отсутствует</em></p>
+        {% endif %}
+
+        <div class="product-description">
+            <h3>Описание:</h3>
+            {% if product.description %}
+                <p>{{ product.description|linebreaks }}</p>
+            {% else %}
+                <p>Описание для этого товара пока не добавлено.</p>
+            {% endif %}
+        </div>
+    </article>
+</body>
+</html>
