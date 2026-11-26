@@ -1,0 +1,40 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{ product.name }} — Skystore{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h2 class="my-0 font-weight-normal">{{ product.name }}</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5 text-center">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="img-fluid rounded mb-3" alt="{{ product.name }}">
+                    {% else %}
+                        <p class="text-muted mt-5">Изображение отсутствует</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-7">
+                    <h3 class="card-title pricing-card-title mb-3">Цена: {{ product.price }} руб.</h3>
+                    <p><strong>Категория:</strong> {{ product.category }}</p>
+                    <hr>
+                    <h5>Описание товара:</h5>
+                    <p class="card-text">
+                        {% if product.description %}
+                            {{ product.description|linebreaks }}
+                        {% else %}
+                            Описание отсутствует.
+                        {% endif %}
+                    </p>
+                    <a href="{% url 'catalog:home' %}" class="btn btn-outline-secondary mt-3">
+                        &larr; Вернуться в каталог
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
