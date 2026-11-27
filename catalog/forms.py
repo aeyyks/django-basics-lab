@@ -1,4 +1,3 @@
-from PIL import Image, UnidentifiedImageError
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import UploadedFile
@@ -18,7 +17,7 @@ FORBIDDEN_WORDS = [
 ]
 
 MAX_IMAGE_SIZE = 5 * 1024 * 1024
-ALLOWED_IMAGE_FORMATS = ('image/jpeg', 'image/png')
+ALLOWED_IMAGE_FORMATS = ('jpeg', 'png')
 
 
 class StyleFormMixin:
@@ -66,13 +65,6 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         if isinstance(image, UploadedFile):
             if image.size > MAX_IMAGE_SIZE:
                 raise ValidationError('Размер изображения не должен превышать 5 МБ.')
-            try:
-                with Image.open(image) as img:
-                    if img.format not in ALLOWED_IMAGE_FORMATS:
-                        raise ValidationError('Допустимы только изображения в форматах JPEG или PNG.')
-                    img.verify()
-            except (UnidentifiedImageError, OSError):
-                raise ValidationError('Загруженный файл не является корректным изображением.')
-            finally:
-                image.seek(0)
+            if image.name.rsplit('.', 1)[-1].lower() not in ALLOWED_IMAGE_FORMATS:
+                raise ValidationError('Допустимы только изображения в форматах JPEG или PNG.')
         return image
