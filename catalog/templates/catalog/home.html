@@ -4,37 +4,39 @@
 
 {% block content %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Skystore</h1>
-    <p class="lead">Skystore - это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели продать</p>
+  <h1 class="display-4">Skystore</h1>
+  <p class="lead">Skystore - это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели
+    продать</p>
+  <a href="{% url 'catalog:product_create' %}" class="btn btn-lg btn-outline-primary mt-2">Добавить товар</a>
 </div>
 
 <div class="container">
-    <div class="row text-center">
-        {% for product in products %}
-        <div class="col-3">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
-                </div>
-                <div class="card-body">
-                    {% if product.image %}
-                        <img src="{{ product.image.url }}" class="img-fluid mb-3" alt="{{ product.name }}">
-                    {% endif %}
-                    <h1 class="card-title pricing-card-title">{{ product.price }} руб.</h1>
-                    <p class="card-text">
-                        {{ product.description|truncatechars:100 }}
-                    </p>
-                    <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-lg btn-block btn-outline-primary">
-                        Подробнее
-                    </a>
-                </div>
-            </div>
+  <div class="row text-center">
+    {% for product in products %}
+    <div class="col-3">
+      <div class="card mb-4 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
         </div>
-        {% empty %}
-            <div class="col-12">
-                <p class="text-center text-muted">Товары пока не добавлены.</p>
-            </div>
-        {% endfor %}
+        <div class="card-body">
+          {% if product.image %}
+          <img src="{{ product.image.url }}" class="img-fluid mb-3" alt="{{ product.name }}">
+          {% endif %}
+          <h1 class="card-title pricing-card-title">{{ product.price }} руб.</h1>
+          <p class="card-text">
+            {{ product.description|truncatechars:100 }}
+          </p>
+          <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-lg btn-block btn-outline-primary">
+            Подробнее
+          </a>
+        </div>
+      </div>
     </div>
+    {% empty %}
+    <div class="col-12">
+      <p class="text-center text-muted">Товары пока не добавлены.</p>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}
